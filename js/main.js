@@ -11,42 +11,47 @@ const pokemonData = [
   { number: 9, name: 'Blastoise', level: 36, type: 'agua' }
 ];
 
+function getPokemonName(pokemonNumber) {
+  return pokemonData[pokemonNumber - 1].name;
+}
+
+function getSelectedPokemon(pokemonNumber) {
+  return pokemonData.find(pokemon => pokemon.number === pokemonNumber);
+}
+
+function saludarEntrenador(gender, name, townFood, pokemonNumber) {
+  const pronoun = gender === 'chico' ? 'entrenador' : gender === 'chica' ? 'entrenadora' : '';
+  const greeting = 'Te damos la bienvenida';
+
+  const pokemonName = getPokemonName(pokemonNumber);
+  const selectedPokemon = getSelectedPokemon(pokemonNumber);
+
+  if (pronoun) {
+    alert(`¡Hola, ${pronoun} ${name} de pueblo ${townFood}! Has elegido a ${pokemonName} (Nivel ${selectedPokemon.level}) de tipo ${selectedPokemon.type}. ¡Mucha suerte en tu aventura!`);
+  } else {
+    alert(`${greeting}, ${name} de pueblo ${townFood}! Has elegido a ${pokemonName} (Nivel ${selectedPokemon.level}) de tipo ${selectedPokemon.type}. ¡Mucha suerte en tu aventura!`);
+  }
+}
+
 let boyorgirl = prompt('¿Eres un chico, una chica o prefieres no utilizar un pronombre?').toLowerCase();
 let nombre = prompt('¿Cuál es tu nombre?');
 let comida = prompt('¿Cuál es tu comida favorita?');
 
-let promptpokemon = 0; 
+let promptpokemon = 0;
 while (promptpokemon < 1 || promptpokemon > 9) {
-   userInput = prompt('Elige tu pokemon utilizando su número, del 1 al 9');
- 
-   if (isNaN(userInput)) {
-     alert('¡Ingresa un valor numérico!');
-   } else {
-     promptpokemon = parseInt(userInput);
-   }
- 
-   if (promptpokemon < 1 || promptpokemon > 9) {
-     alert('¡Del 1 al 9 te dije!');
-   }
- }
+  userInput = prompt('Elige tu pokemon utilizando su número, del 1 al 9');
 
-let nropokemon = parseInt(promptpokemon);
-
-// Map para obtener el número de pokemon
-const pokemonName = pokemonData.map(pokemon => pokemon.name)[nropokemon - 1];
-
-// Find para encontrar los detalles del pokemon
-const selectedPokemon = pokemonData.find(pokemon => pokemon.number === nropokemon);
-
-function saludarEntrenador() {
-  const pronoun = boyorgirl === 'chico' ? 'entrenador' : boyorgirl === 'chica' ? 'entrenadora' : '';
-  const greeting = 'Te damos la bienvenida';
-  
-  if (pronoun) {
-    alert(`¡Hola, ${pronoun} ${nombre} de pueblo ${comida}! Has elegido a ${pokemonName} (Nivel ${selectedPokemon.level}) de tipo ${selectedPokemon.type}. ¡Mucha suerte en tu aventura!`);
+  if (isNaN(userInput)) {
+    alert('¡Ingresa un valor numérico!');
   } else {
-    alert(`${greeting}, ${nombre} de pueblo ${comida}! Has elegido a ${pokemonName} (Nivel ${selectedPokemon.level}) de tipo ${selectedPokemon.type}. ¡Mucha suerte en tu aventura!`);
+    promptpokemon = parseInt(userInput);
+  }
+
+  if (promptpokemon < 1 || promptpokemon > 9) {
+    alert('¡Del 1 al 9 te dije!');
   }
 }
 
-saludarEntrenador();
+let nropokemon = parseInt(promptpokemon);
+
+saludarEntrenador(boyorgirl, nombre, comida, nropokemon);
